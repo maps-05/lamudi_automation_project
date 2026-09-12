@@ -30,8 +30,10 @@ This project demonstrates production-grade Web UI automation using **Robot Frame
 ```bash
 git clone <repository-url>
 cd lamudi_automation
-2. Set Up a Virtual Environment (Recommended)
-Bash
+```
+
+### 2. Set Up a Virtual Environment (Recommended)
+```bash
 python -m venv venv
 
 # Windows (PowerShell)
@@ -39,57 +41,64 @@ python -m venv venv
 
 # macOS/Linux
 source venv/bin/activate
-3. Install Dependencies
-Ensure your virtual environment is activated, then install the required packages:
+```
 
-Bash
+### 3. Install Dependencies
+Ensure your virtual environment is activated, then install the required packages:
+```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
-(Ensure requirements.txt includes: robotframework, robotframework-seleniumlibrary, openai, and python-dotenv)
+```
+*(Ensure `requirements.txt` includes: `robotframework`, `robotframework-seleniumlibrary`, `openai`, and `python-dotenv`)*
 
 ### 4. 🔑 Environment Configuration (API Key)
 The AI validation layer requires a Groq API key to process listing descriptions in real-time.
 
 **How to get your free API key:**
-1. Navigate to the [Groq Cloud Console](https://console.groq.com/keys).
+1. Navigate to the [Groq Cloud Console API Keys page](https://console.groq.com/keys).
 2. Create a free account or log in.
 3. Click the **Create API Key** button and copy the generated key.
 
 A `.env` file is included in the root directory of the project. Open it and replace the placeholder string with your actual API key:
 ```env
 GROQ_API_KEY="gsk_your_actual_key_here"
+```
 
+---
 
-🚀 Running the Tests
-The test suites are categorized by complexity and functionality. Execute the following commands to run specific test groups. All outputs (logs, screenshots, and XML summaries) will be generated in the results/ folder.
+## 🚀 Running the Tests
+The test suites are categorized by complexity and functionality. Execute the following commands to run specific test groups. All outputs (logs, screenshots, and XML summaries) will be generated in the `results/` folder.
 
-Level 1: Simple Test Cases (Standard UI Interactions)
+### Level 1: Simple Test Cases (Standard UI Interactions)
 Validates standard web elements, search bars, and simple data comparison.
-
-Bash
+```bash
 python -m robot -d results tests/search_properties.robot
-Level 2: Custom Test Cases (Calculators & Sliders)
-Tests complex financial calculators, handling custom web components, range sliders, and dynamic inputs via JavaScript injection.
+```
 
-Bash
+### Level 2: Custom Test Cases (Calculators & Sliders)
+Tests complex financial calculators, handling custom web components, range sliders, and dynamic inputs via JavaScript injection.
+```bash
 python -m robot -d results tests/loan_calculator.robot
 python -m robot -d results tests/home_loans.robot
-Level 3: AI-Combined Test Cases (Dynamic Data Validation)
-Integrates standard Selenium web scraping with real-time AI validation to determine if scraped property descriptions match a specific "vibe" or category criteria.
+```
 
-Bash
+### Level 3: AI-Combined Test Cases (Dynamic Data Validation)
+Integrates standard Selenium web scraping with real-time AI validation to determine if scraped property descriptions match a specific "vibe" or category criteria.
+```bash
 python -m robot -d results tests/category_buy.robot
 python -m robot -d results tests/category_rent.robot
-📊 Viewing Test Artifacts
+```
+
+---
+
+## 📊 Viewing Test Artifacts
 After execution, open the generated HTML reports in any web browser to review the results and automated screenshots:
+* **Detailed Execution Log:** `results/log.html`
+* **High-Level Test Report:** `results/report.html`
 
-Detailed Execution Log: results/log.html
+---
 
-High-Level Test Report: results/report.html
-
-🤖 AI Validation Architecture
-Listing Extraction: During UI traversal, the test scrapes unstructured property descriptions directly from the active listing card.
-
-Inference Pipeline: The text is dispatched via RealEstateHelper.ai_validate_listing_vibe to the Groq inference engine.
-
-Strict Evaluation: The model evaluates whether the listing satisfies the target criteria (e.g., Luxury) and returns a binary verdict (Yes/No), automatically triggering test assertions based on the response.
+## 🤖 AI Validation Architecture
+* **Listing Extraction:** During UI traversal, the test scrapes unstructured property descriptions directly from the active listing card.
+* **Inference Pipeline:** The text is dispatched via `RealEstateHelper.ai_validate_listing_vibe` to the Groq inference engine.
+* **Strict Evaluation:** The model evaluates whether the listing satisfies the target criteria (e.g., Luxury) and returns a binary verdict (Yes/No), automatically triggering test assertions based on the response.
